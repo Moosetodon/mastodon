@@ -12,6 +12,7 @@ module Admin
 
     private
 
+
     def filtered_accounts
       AccountFilter.new(filter_params).results
     end
@@ -23,7 +24,8 @@ module Admin
         :by_domain,
         :silenced,
         :recent,
-        :suspended
+        :suspended,
+        :supporter
       )
     end
   end
