@@ -26,6 +26,7 @@ class SuspendAccountService < BaseService
 
   def purge_profile
     @account.suspended    = true
+    @account.supporter    = false
     @account.display_name = ''
     @account.note         = ''
     @account.avatar.destroy

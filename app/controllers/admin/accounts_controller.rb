@@ -13,6 +13,7 @@ module Admin
       @accounts = @accounts.silenced                          if params[:silenced].present?
       @accounts = @accounts.recent                            if params[:recent].present?
       @accounts = @accounts.suspended                         if params[:suspended].present?
+      @accounts = @accounts.supporter                         if params[:supporter].present?
     end
 
     def show; end
@@ -26,6 +27,11 @@ module Admin
       @account.update(suspended: false)
       redirect_to admin_accounts_path
     end
+     
+    def set_supporter
+      @account.update(supporter: true)
+      redurect_to admin_accounts_path
+    end
 
     def silence
       @account.update(silenced: true)
@@ -35,6 +41,11 @@ module Admin
     def unsilence
       @account.update(silenced: false)
       redirect_to admin_accounts_path
+    end
+
+    def unset_supporter
+      @account.update(supporter: true)
+      redurect_to admin_accounts_path
     end
 
     private
