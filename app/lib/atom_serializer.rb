@@ -67,7 +67,7 @@ class AtomSerializer
     append_element(entry, 'id', TagManager.instance.unique_tag(stream_entry.created_at, stream_entry.activity_id, stream_entry.activity_type))
     append_element(entry, 'published', stream_entry.created_at.iso8601)
     append_element(entry, 'updated', stream_entry.updated_at.iso8601)
-    append_element(entry, 'title', stream_entry&.status&.title)
+    append_element(entry, 'title', stream_entry&.status&.title || 'Delete')
 
     entry << author(stream_entry.account) if root
 
@@ -328,7 +328,7 @@ class AtomSerializer
 
   def serialize_status_attributes(entry, status)
     append_element(entry, 'summary', status.spoiler_text) unless status.spoiler_text.blank?
-    append_element(entry, 'content', Formatter.instance.format(status.reblog? ? status.reblog : status).to_str, type: 'html')
+    append_element(entry, 'content', Formatter.instance.format(status.proper).to_str, type: 'html')
 
     status.mentions.each do |mentioned|
       append_element(entry, 'link', nil, rel: :mentioned, 'ostatus:object-type': TagManager::TYPES[:person], href: TagManager.instance.uri_for(mentioned.account))
