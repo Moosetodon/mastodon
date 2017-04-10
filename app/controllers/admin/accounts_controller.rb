@@ -45,7 +45,7 @@ module Admin
 
     def unset_supporter
       @account.update(supporter: true)
-      redurect_to admin_accounts_path
+      redirect_to admin_accounts_path
     end
 
     private
