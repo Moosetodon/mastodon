@@ -117,7 +117,7 @@ const Header = React.createClass({
           <Avatar account={account} />
 
           <span style={{ display: 'inline-block', fontSize: '20px', lineHeight: '27px', fontWeight: '500' }} className='account__header__display-name' dangerouslySetInnerHTML={displayNameHTML} />
-          <span className='account__header__username' style={{ fontSize: '14px', fontWeight: '400', display: 'block', marginBottom: '10px' }}>{account.get('acct')} {lockedIcon}</span>
+          <span className='account__header__username' style={{ fontSize: '14px', fontWeight: '400', display: 'block', marginBottom: '10px' }}>@{account.get('acct')} {lockedIcon}</span>
           <div style={{ fontSize: '14px' }} className='account__header__content' dangerouslySetInnerHTML={content} />
 
           {info}
