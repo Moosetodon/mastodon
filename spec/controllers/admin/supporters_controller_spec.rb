@@ -10,7 +10,7 @@ describe Admin::SupportersController do
     it 'redirects to admin accounts page' do
       post :create, params: { account_id: account.id }
 
-      expect(response).to redirect_to(admin_accounts_path)
+      expect(response).to redirect_to admin_account_path(account.id)
     end
   end
 
@@ -18,7 +18,7 @@ describe Admin::SupportersController do
     it 'redirects to admin accounts page' do
       delete :destroy, params: { account_id: account.id }
 
-      expect(response).to redirect_to(admin_accounts_path)
+      expect(response).to redirect_to admin_account_path(account.id)
     end
   end
 end
