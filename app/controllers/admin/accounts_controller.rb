@@ -12,7 +12,6 @@ module Admin
 
     private
 
-
     def filtered_accounts
       AccountFilter.new(filter_params).results
     end

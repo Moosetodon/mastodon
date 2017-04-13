@@ -91,6 +91,7 @@ Rails.application.routes.draw do
 
     resources :accounts, only: [:index, :show] do
       resource :silence, only: [:create, :destroy]
+      resource :supporter, only: [:create, :destroy]
       resource :suspension, only: [:create, :destroy]
     end
   end
