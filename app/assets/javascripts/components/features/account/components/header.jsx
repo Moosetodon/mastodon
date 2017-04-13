@@ -75,6 +75,7 @@ const Header = React.createClass({
     let info        = '';
     let actionBtn   = '';
     let lockedIcon  = '';
+    let supporterTag = '';
 
     if (displayName.length === 0) {
       displayName = account.get('username');
@@ -103,6 +104,9 @@ const Header = React.createClass({
     if (account.get('locked')) {
       lockedIcon = <i className='fa fa-lock' />;
     }
+    if (account.get('supporter')) {
+      supporterTag = <div className='supporter-badge'><a href='/about/more' target='_blank'>Official Moosetodonian</a></div>;
+    }
 
     const content         = { __html: emojify(account.get('note')) };
     const displayNameHTML = { __html: emojify(escapeTextContentForBrowser(displayName)) };
@@ -113,12 +117,13 @@ const Header = React.createClass({
           <Avatar account={account} />
 
           <span style={{ display: 'inline-block', fontSize: '20px', lineHeight: '27px', fontWeight: '500' }} className='account__header__display-name' dangerouslySetInnerHTML={displayNameHTML} />
-          <span className='account__header__username' style={{ fontSize: '14px', fontWeight: '400', display: 'block', marginBottom: '10px' }}>@{account.get('acct')} {lockedIcon}</span>
+          <span className='account__header__username' style={{ fontSize: '14px', fontWeight: '400', display: 'block', marginBottom: '10px' }}>{account.get('acct')} {lockedIcon}</span>
           <div style={{ fontSize: '14px' }} className='account__header__content' dangerouslySetInnerHTML={content} />
 
           {info}
           {actionBtn}
         </div>
+        {supporterTag}
       </div>
     );
   }
