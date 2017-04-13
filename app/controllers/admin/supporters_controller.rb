@@ -6,12 +6,12 @@ module Admin
 
     def create
       @account.update(supporter: true)
-      redirect_to admin_accounts_path
+      redirect_to admin_account_path(@account.id)
     end
 
     def destroy
       @account.update(supporter: false)
-      redirect_to admin_accounts_path
+      redirect_to admin_account_path(@account.id)
     end
 
     private

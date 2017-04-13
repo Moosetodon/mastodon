@@ -79,6 +79,6 @@
   = link_to 'Perform full suspension', admin_account_suspension_path(@account.id), method: :post, data: { confirm: 'Are you sure?' }, class: 'button'
 
 - if @account.supporter?
-  = link_to 'Remove supporter status', admin_account_supporter_path(@account.id), method: :post, class: 'button'
+  = link_to 'Unset Supporter', admin_account_supporter_path(@account.id), method: :delete, class: 'button'
 - else
-  = link_to 'Set supporter status', admin_account_supporter_path(@account.id), method: :delete, class: 'button'
+  = link_to 'Make a Supporter', admin_account_supporter_path(@account.id), method: :post, class: 'button'
