@@ -9,7 +9,8 @@ import { Motion, spring } from 'react-motion';
 const messages = defineMessages({
   unfollow: { id: 'account.unfollow', defaultMessage: 'Unfollow' },
   follow: { id: 'account.follow', defaultMessage: 'Follow' },
-  requested: { id: 'account.requested', defaultMessage: 'Awaiting approval' }
+  requested: { id: 'account.requested', defaultMessage: 'Awaiting approval' },
+  supporter: { id: 'account.supporter', defaultMessage: 'Official Moosetodonian' }
 });
 
 const Avatar = React.createClass({
@@ -105,7 +106,7 @@ const Header = React.createClass({
       lockedIcon = <i className='fa fa-lock' />;
     }
     if (account.get('supporter')) {
-      supporterTag = <div className='supporter-badge'><a href='/about/more' target='_blank'>Official Moosetodonian</a></div>;
+      supporterTag = <div className='supporter-badge'><a href='/about/more' target='_blank'>{intl.formatMessage(messages.supporter)}</a></div>;
     }
 
     const content         = { __html: emojify(account.get('note')) };

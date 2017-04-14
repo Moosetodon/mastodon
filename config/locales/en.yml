@@ -38,6 +38,7 @@ en:
     people_who_follow: People who follow %{name}
     posts: Posts
     remote_follow: Remote follow
+    supporter: Official Moosetodonian
     unfollow: Unfollow
   application_mailer:
     settings: 'Change e-mail preferences: %{link}'
