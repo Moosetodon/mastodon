@@ -19,6 +19,13 @@
   }
 }
 
+.account__header {
+  .supporter-badge {
+    margin: 0 0;
+    border-radius: 0 0 0 0;
+  }
+}
+
 .card {
   background: $color1;
   background-size: cover;
