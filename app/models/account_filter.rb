@@ -29,6 +29,8 @@ class AccountFilter
       Account.recent
     when /suspended/
       Account.suspended
+    when /supporter/
+      Account.supporter
     else
       raise "Unknown filter: #{key}"
     end

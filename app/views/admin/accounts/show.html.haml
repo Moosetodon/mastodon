@@ -27,6 +27,13 @@
             = l @account.user.current_sign_in_at
           - else
             Never
+      %tr
+        %th Supporter Status
+        %td
+          - if @account.supporter?
+            Supporter
+          - else
+            Freedom Rider
     - else
       %tr
         %th Profile URL
@@ -70,3 +77,8 @@
   = link_to 'Undo suspension', admin_account_suspension_path(@account.id), method: :delete, class: 'button'
 - else
   = link_to 'Perform full suspension', admin_account_suspension_path(@account.id), method: :post, data: { confirm: 'Are you sure?' }, class: 'button'
+
+- if @account.supporter?
+  = link_to 'Unset Supporter', admin_account_supporter_path(@account.id), method: :delete, class: 'button'
+- else
+  = link_to 'Make a Supporter', admin_account_supporter_path(@account.id), method: :post, class: 'button'

@@ -23,7 +23,8 @@ module Admin
         :by_domain,
         :silenced,
         :recent,
-        :suspended
+        :suspended,
+        :supporter
       )
     end
   end

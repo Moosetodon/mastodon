@@ -21,6 +21,7 @@ const en = {
   "account.posts": "Posts",
   "account.report": "Report @{name}",
   "account.requested": "Awaiting approval",
+  "account.supporter": "Official Moosetodonian",
   "account.unblock": "Unblock @{name}",
   "account.unfollow": "Unfollow",
   "account.unmute": "Unmute @{name}",

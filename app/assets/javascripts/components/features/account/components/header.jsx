@@ -9,7 +9,8 @@ import { Motion, spring } from 'react-motion';
 const messages = defineMessages({
   unfollow: { id: 'account.unfollow', defaultMessage: 'Unfollow' },
   follow: { id: 'account.follow', defaultMessage: 'Follow' },
-  requested: { id: 'account.requested', defaultMessage: 'Awaiting approval' }
+  requested: { id: 'account.requested', defaultMessage: 'Awaiting approval' },
+  supporter: { id: 'account.supporter', defaultMessage: 'Official Moosetodonian' }
 });
 
 const Avatar = React.createClass({
@@ -75,6 +76,7 @@ const Header = React.createClass({
     let info        = '';
     let actionBtn   = '';
     let lockedIcon  = '';
+    let supporterTag = '';
 
     if (displayName.length === 0) {
       displayName = account.get('username');
@@ -103,6 +105,9 @@ const Header = React.createClass({
     if (account.get('locked')) {
       lockedIcon = <i className='fa fa-lock' />;
     }
+    if (account.get('supporter')) {
+      supporterTag = <div className='supporter-badge'><a href='/about/more' target='_blank'>{intl.formatMessage(messages.supporter)}</a></div>;
+    }
 
     const content         = { __html: emojify(account.get('note')) };
     const displayNameHTML = { __html: emojify(escapeTextContentForBrowser(displayName)) };
@@ -119,6 +124,7 @@ const Header = React.createClass({
           {info}
           {actionBtn}
         </div>
+        {supporterTag}
       </div>
     );
   }

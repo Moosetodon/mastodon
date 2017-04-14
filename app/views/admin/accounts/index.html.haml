@@ -19,6 +19,11 @@
     %ul
       %li= filter_link_to 'Alphabetic', recent: nil
       %li= filter_link_to 'Most recent', recent: '1'
+  .filter-subset
+    %strong Supporters
+    %ul
+      %li= filter_link_to 'All', supporter: nil
+      %li= filter_link_to 'Supporter', supporter: '1'
 
 %table.table
   %thead
