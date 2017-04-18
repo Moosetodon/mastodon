@@ -84,6 +84,6 @@
     = link_to t('admin.accounts.perform_full_suspension'), admin_account_suspension_path(@account.id), method: :post, data: { confirm: t('admin.accounts.are_you_sure') }, class: 'button'
 
   - if @account.supporter?
-    = link_to 'Unset Supporter', admin_account_supporter_path(@account.id), method: :delete, class: 'button'
+    = link_to t('admin.accounts.unset_supporter'), admin_account_supporter_path(@account.id), method: :delete, class: 'button'
   - else
-    = link_to 'Make a Supporter', admin_account_supporter_path(@account.id), method: :post, class: 'button'
+    = link_to t('admin.accounts.make_suporter'), admin_account_supporter_path(@account.id), method: :post, class: 'button'

@@ -20,10 +20,10 @@
       %li= filter_link_to t('admin.accounts.order.alphabetic'), recent: nil
       %li= filter_link_to t('admin.accounts.order.most_recent'), recent: '1'
   .filter-subset
-    %strong Supporters
+    %strong= t('admin.accounts.supporters.title') 
     %ul
-      %li= filter_link_to 'All', supporter: nil
-      %li= filter_link_to 'Supporter', supporter: '1'
+      %li= filter_link_to t('admin.accounts.supporters.all'), supporter: nil
+      %li= filter_link_to t('admin.accounts.supporters.supporters'), supporter: '1'
 
 %table.table
   %thead

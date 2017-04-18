@@ -79,6 +79,12 @@ en:
       title: Accounts
       undo_silenced: Undo silence
       undo_suspension: Undo suspension
+      unset_supporter: Unset Supporter 
+      make_supporter: Make Supporter
+      supporters:
+        title: Supporters
+        all: All
+        supporters: Supporters
       username: Username
       web: Web
     domain_blocks:
