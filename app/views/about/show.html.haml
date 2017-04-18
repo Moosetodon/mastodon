@@ -21,23 +21,19 @@
 
   %p= t('about.about_mastodon').html_safe
 
-  .screenshot-with-signup
-    .mascot= image_tag 'moose.png'
+  .wrapper
+    %h2= t('about.welcome')
 
-    - if @instance_presenter.open_registrations
-      = render 'registration'
-    - else
-      .closed-registrations-message
-        - if @instance_presenter.closed_registrations_message.blank?
-          %p= t('about.closed_registrations')
-        - else
-          = @instance_presenter.closed_registrations_message.html_safe
-        .info
-          = link_to t('auth.login'), new_user_session_path, class: 'webapp-btn'
-          ·
-          = link_to t('about.other_instances'), 'https://github.com/tootsuite/documentation/blob/master/Using-Mastodon/List-of-Mastodon-instances.md'
-          ·
-          = link_to t('about.about_this'), about_more_path
+    %p= t('about.buttons_message').html_safe
+
+    .actions
+      = link_to t('auth.login'), new_user_session_path, class: 'button'
+      &nbsp;
+      = link_to t('auth.register'), new_user_registration_path, class: 'button'
+
+    %p
+      = t('about.learn_more_spiel') 
+      = link_to t('about.about_this'), about_more_path
 
   %h3= t('about.features_headline')
 

@@ -3,6 +3,9 @@ en:
   about:
     about_mastodon: <em>Mastodon.club</em> is a Canadian Mastodon Instance. Mastodon is a <em>free, open-source</em> social network. A <em>decentralized</em> alternative to commercial platforms, it avoids the risks of a single company monopolizing your communication.
     about_this: About this instance
+    buttons_message: Dear unauthenticated user... You're over there, I'm sitting over here, and I'm not sure who you are. If you could do me a solid and introduce yourself, that would be excellent.
+    learn_more_spiel: If you're not ready for that level of commitment, why not read a little more about who we are! 
+    welcome: Let's get started, eh?
     apps: Apps
     business_email: 'Administrator e-mail:'
     closed_registrations: Registrations are currently closed on this instance.
