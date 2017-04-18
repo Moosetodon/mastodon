@@ -5,7 +5,7 @@
  *   1. to add your new string here; and
  *   2. to remove old strings that are no longer needed; and
  *   3. to sort the strings by the key.
- #   4. To rename the `en` const name and export default name to match your locale.
+ *   4. To rename the `en` const name and export default name to match your locale.
  * Thanks!
  */
 const en = {
@@ -32,6 +32,7 @@ const en = {
   "column.favourites": "Favourites",
   "column.follow_requests": "Follow requests",
   "column.home": "Home",
+  "column.mutes": "Muted users",
   "column.notifications": "Notifications",
   "column.public": "Federated timeline",
   "compose_form.placeholder": "What is on your mind?",
@@ -48,7 +49,7 @@ const en = {
   "empty_column.notifications": "You don't have any notifications yet. Interact with others to start the conversation.",
   "empty_column.public": "There is nothing here! Write something publicly, or manually follow users from other instances to fill it up",
   "follow_request.authorize": "Authorize",
-  "follow_request.reject": "Rejec",
+  "follow_request.reject": "Reject",
   "getting_started.apps": "Various apps are available",
   "getting_started.heading": "Getting started",
   "getting_started.open_source_notice": "Mastodon is open source software. You can contribute or report issues on GitHub at {github}. {apps}.",
@@ -69,10 +70,12 @@ const en = {
   "navigation_bar.follow_requests": "Follow requests",
   "navigation_bar.info": "Extended information",
   "navigation_bar.logout": "Logout",
+  "navigation_bar.mutes": "Muted users",
   "navigation_bar.preferences": "Preferences",
   "navigation_bar.public_timeline": "Federated timeline",
   "notification.favourite": "{name} favourited your status",
   "notification.follow": "{name} followed you",
+  "notification.mention": "{name} mentioned you",
   "notification.reblog": "{name} boosted your status",
   "notifications.clear_confirmation": "Are you sure you want to clear all your notifications?",
   "notifications.clear": "Clear notifications",
@@ -126,6 +129,8 @@ const en = {
   "upload_progress.label": "Uploading...",
   "video_player.toggle_sound": "Toggle sound",
   "video_player.toggle_visible": "Toggle visibility",
+  "video_player.expand": "Expand video",
+  "video_player.video_error": "Video could not be played",
 };
 
 export default en;

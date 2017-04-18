@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170413154818) do
+ActiveRecord::Schema.define(version: 20170414132105) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20170413154818) do
     t.integer  "followers_count",         default: 0,     null: false
     t.integer  "following_count",         default: 0,     null: false
     t.boolean  "supporter",               default: false, null: false
+    t.datetime "last_webfingered_at"
     t.index "(((setweight(to_tsvector('simple'::regconfig, (display_name)::text), 'A'::\"char\") || setweight(to_tsvector('simple'::regconfig, (username)::text), 'B'::\"char\")) || setweight(to_tsvector('simple'::regconfig, (COALESCE(domain, ''::character varying))::text), 'C'::\"char\")))", name: "search_index", using: :gin
     t.index "lower((username)::text), lower((domain)::text)", name: "index_accounts_on_username_and_domain_lower", using: :btree
     t.index ["url"], name: "index_accounts_on_url", using: :btree
@@ -244,6 +245,7 @@ ActiveRecord::Schema.define(version: 20170413154818) do
     t.boolean  "reply",                  default: false
     t.integer  "favourites_count",       default: 0,     null: false
     t.integer  "reblogs_count",          default: 0,     null: false
+    t.string   "language",               default: "en",  null: false
     t.index ["account_id"], name: "index_statuses_on_account_id", using: :btree
     t.index ["in_reply_to_id"], name: "index_statuses_on_in_reply_to_id", using: :btree
     t.index ["reblog_of_id"], name: "index_statuses_on_reblog_of_id", using: :btree
@@ -313,6 +315,7 @@ ActiveRecord::Schema.define(version: 20170413154818) do
     t.integer  "consumed_timestep"
     t.boolean  "otp_required_for_login"
     t.datetime "last_emailed_at"
+    t.string   "otp_backup_codes",                                       array: true
     t.index ["account_id"], name: "index_users_on_account_id", using: :btree
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
