@@ -2039,7 +2039,7 @@ button.icon-button.active i.fa-retweet {
 }
 
 .onboarding-modal {
-  background: $color2;
+  background: $color5; //white
   color: $color1;
   border-radius: 8px;
   overflow: hidden;
@@ -2270,7 +2270,7 @@ button.icon-button.active i.fa-retweet {
 }
 
 .boost-modal {
-  background: lighten($color2, 8%);
+  background: $color5; // white
   color: $color1;
   border-radius: 8px;
   overflow: hidden;
