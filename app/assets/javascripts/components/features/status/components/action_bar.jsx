@@ -11,6 +11,7 @@ const messages = defineMessages({
   reblog: { id: 'status.reblog', defaultMessage: 'Boost' },
   cannot_reblog: { id: 'status.cannot_reblog', defaultMessage: 'This post cannot be boosted' },
   favourite: { id: 'status.favourite', defaultMessage: 'Favourite' },
+  bookmark: { id: 'status.bookmark', defaultMessage: 'Bookmark' },
   report: { id: 'status.report', defaultMessage: 'Report @{name}' }
 });
 
@@ -21,6 +22,7 @@ class ActionBar extends React.PureComponent {
     this.handleReplyClick = this.handleReplyClick.bind(this);
     this.handleReblogClick = this.handleReblogClick.bind(this);
     this.handleFavouriteClick = this.handleFavouriteClick.bind(this);
+    this.handleBookmarkClick = this.handleBookmarkClick.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.handleMentionClick = this.handleMentionClick.bind(this);
     this.handleReport = this.handleReport.bind(this);
@@ -37,6 +39,10 @@ class ActionBar extends React.PureComponent {
   handleFavouriteClick () {
     this.props.onFavourite(this.props.status);
   }
+
+  handleBookmarkClick () {
+    this.props.onBookmark(this.props.status);
+  },
 
   handleDeleteClick () {
     this.props.onDelete(this.props.status);
@@ -74,7 +80,8 @@ class ActionBar extends React.PureComponent {
       <div className='detailed-status__action-bar'>
         <div className='detailed-status__button'><IconButton title={intl.formatMessage(messages.reply)} icon={status.get('in_reply_to_id', null) === null ? 'reply' : 'reply-all'} onClick={this.handleReplyClick} /></div>
         <div className='detailed-status__button'><IconButton disabled={reblog_disabled} active={status.get('reblogged')} title={reblog_disabled ? intl.formatMessage(messages.cannot_reblog) : intl.formatMessage(messages.reblog)} icon={reblogIcon} onClick={this.handleReblogClick} /></div>
-        <div className='detailed-status__button'><IconButton animate={true} active={status.get('favourited')} title={intl.formatMessage(messages.favourite)} icon='star' onClick={this.handleFavouriteClick} activeStyle={{ color: '#ca8f04' }} /></div>
+        <div className='detailed-status__button'><IconButton animate={true} active={status.get('favourited')} title={intl.formatMessage(messages.favourite)} icon='beer' onClick={this.handleFavouriteClick} activeStyle={{ color: '#ca8f04' }} /></div>
+        <div className='detailed-stauts__button'><IconButton animate={true} active={status.get('bookmarked')} title={intl.formatMessage(messages.bookmark)} icon='floppy-o' onClick={this.handleBookmarkClick} activeStyle={{ color: '#457cff' }} /></div>
         <div className='detailed-status__button'><DropdownMenu size={18} icon='ellipsis-h' items={menu} direction="left" ariaLabel="More" /></div>
       </div>
     );
@@ -91,6 +98,7 @@ ActionBar.propTypes = {
   onReply: PropTypes.func.isRequired,
   onReblog: PropTypes.func.isRequired,
   onFavourite: PropTypes.func.isRequired,
+  onBookmark: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onMention: PropTypes.func.isRequired,
   onReport: PropTypes.func,

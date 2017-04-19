@@ -14,6 +14,7 @@ const messages = defineMessages({
   reblog: { id: 'status.reblog', defaultMessage: 'Boost' },
   cannot_reblog: { id: 'status.cannot_reblog', defaultMessage: 'This post cannot be boosted' },
   favourite: { id: 'status.favourite', defaultMessage: 'Favourite' },
+  bookmark: { id: 'status.bookmark', defaultMessage: 'Bookmark' },
   open: { id: 'status.open', defaultMessage: 'Expand this status' },
   report: { id: 'status.report', defaultMessage: 'Report @{name}' }
 });
@@ -24,6 +25,7 @@ class StatusActionBar extends React.PureComponent {
     super(props, context);
     this.handleReplyClick = this.handleReplyClick.bind(this);
     this.handleFavouriteClick = this.handleFavouriteClick.bind(this);
+    this.handleBookmarkClick = this.handleBookmarkClick.bind(this);
     this.handleReblogClick = this.handleReblogClick.bind(this);
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.handleMentionClick = this.handleMentionClick.bind(this);
@@ -40,6 +42,10 @@ class StatusActionBar extends React.PureComponent {
   handleFavouriteClick () {
     this.props.onFavourite(this.props.status);
   }
+
+  handleBookmarkClick () {
+    this.props.onBookmark(this.props.status);
+  },
 
   handleReblogClick (e) {
     this.props.onReblog(this.props.status, e);
@@ -105,7 +111,8 @@ class StatusActionBar extends React.PureComponent {
       <div className='status__action-bar'>
         <div className='status__action-bar-button-wrapper'><IconButton title={reply_title} icon={reply_icon} onClick={this.handleReplyClick} /></div>
         <div className='status__action-bar-button-wrapper'><IconButton disabled={reblog_disabled} active={status.get('reblogged')} title={reblog_disabled ? intl.formatMessage(messages.cannot_reblog) : intl.formatMessage(messages.reblog)} icon={reblogIcon} onClick={this.handleReblogClick} /></div>
-        <div className='status__action-bar-button-wrapper'><IconButton animate={true} active={status.get('favourited')} title={intl.formatMessage(messages.favourite)} icon='star' onClick={this.handleFavouriteClick} className='star-icon' /></div>
+        <div className='status__action-bar-button-wrapper'><IconButton animate={true} active={status.get('favourited')} title={intl.formatMessage(messages.favourite)} icon='beer' onClick={this.handleFavouriteClick} className='beer-icon' /></div>
+        <div className='status__action-bar-button-wrapper'><IconButton animate={true} active={status.get('bookmarked')} title={intl.formatMessage(messages.bookmark)} icon='floppy-o' onClick={this.handleBookmarkClick} activeStyle={{ color: '#457cff' }} /></div>
 
         <div className='status__action-bar-dropdown'>
           <DropdownMenu items={menu} icon='ellipsis-h' size={18} direction="right" ariaLabel="More"/>
@@ -124,6 +131,7 @@ StatusActionBar.propTypes = {
   status: ImmutablePropTypes.map.isRequired,
   onReply: PropTypes.func,
   onFavourite: PropTypes.func,
+  onBookmark: PropTypes.func,
   onReblog: PropTypes.func,
   onDelete: PropTypes.func,
   onMention: PropTypes.func,

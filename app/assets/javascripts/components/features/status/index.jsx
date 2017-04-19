@@ -9,6 +9,8 @@ import DetailedStatus from './components/detailed_status';
 import ActionBar from './components/action_bar';
 import Column from '../ui/components/column';
 import {
+  bookmark,
+  unbookmark,
   favourite,
   unfavourite,
   reblog,
@@ -84,6 +86,14 @@ class Status extends React.PureComponent {
       this.props.dispatch(favourite(status));
     }
   }
+
+  handleBookmarkClick (status) {
+    if (status.get('bookmarked')) {
+      this.props.dispatch(unbookmark(status));
+    } else {
+      this.props.dispatch(bookmark(status));
+    }
+  },
 
   handleReplyClick (status) {
     this.props.dispatch(replyCompose(status, this.context.router));
@@ -167,7 +177,7 @@ class Status extends React.PureComponent {
             {ancestors}
 
             <DetailedStatus status={status} autoPlayGif={autoPlayGif} me={me} onOpenVideo={this.handleOpenVideo} onOpenMedia={this.handleOpenMedia} />
-            <ActionBar status={status} me={me} onReply={this.handleReplyClick} onFavourite={this.handleFavouriteClick} onReblog={this.handleReblogClick} onDelete={this.handleDeleteClick} onMention={this.handleMentionClick} onReport={this.handleReport} />
+            <ActionBar status={status} me={me} onReply={this.handleReplyClick} onFavourite={this.handleFavouriteClick} onBookmark={this.handleBookmarkClick} onReblog={this.handleReblogClick} onDelete={this.handleDeleteClick} onMention={this.handleMentionClick} onReport={this.handleReport} />
 
             {descendants}
           </div>

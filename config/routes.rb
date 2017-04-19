@@ -128,6 +128,8 @@ Rails.application.routes.draw do
           post :unreblog
           post :favourite
           post :unfavourite
+          post :bookmark
+          post :unbookmark
         end
       end
 
@@ -143,6 +145,7 @@ Rails.application.routes.draw do
       resources :blocks,     only: [:index]
       resources :mutes,      only: [:index]
       resources :favourites, only: [:index]
+      resources :bookmarks,  only: [:index]
       resources :reports,    only: [:index, :create]
 
       resource :instance, only: [:show]

@@ -93,11 +93,13 @@ class ApiController < ApplicationController
     if current_account.nil?
       @reblogs_map    = {}
       @favourites_map = {}
+      @bookmarks_map  = {}
       return
     end
 
     status_ids      = statuses.compact.flat_map { |s| [s.id, s.reblog_of_id] }.uniq
     @reblogs_map    = Status.reblogs_map(status_ids, current_account)
     @favourites_map = Status.favourites_map(status_ids, current_account)
+    @bookmarks_map  = Status.bookmarks_map(status_ids, current_account)
   end
 end

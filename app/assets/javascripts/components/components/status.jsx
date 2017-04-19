@@ -107,6 +107,7 @@ Status.propTypes = {
   wrapped: PropTypes.bool,
   onReply: PropTypes.func,
   onFavourite: PropTypes.func,
+  onBookmark: PropTypes.func,
   onReblog: PropTypes.func,
   onDelete: PropTypes.func,
   onOpenMedia: PropTypes.func,
