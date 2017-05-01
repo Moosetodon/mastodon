@@ -45,7 +45,7 @@ class StatusActionBar extends React.PureComponent {
 
   handleBookmarkClick () {
     this.props.onBookmark(this.props.status);
-  },
+  }
 
   handleReblogClick (e) {
     this.props.onReblog(this.props.status, e);

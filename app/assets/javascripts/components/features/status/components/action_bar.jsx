@@ -42,7 +42,7 @@ class ActionBar extends React.PureComponent {
 
   handleBookmarkClick () {
     this.props.onBookmark(this.props.status);
-  },
+  }
 
   handleDeleteClick () {
     this.props.onDelete(this.props.status);

@@ -93,7 +93,7 @@ class Status extends React.PureComponent {
     } else {
       this.props.dispatch(bookmark(status));
     }
-  },
+  }
 
   handleReplyClick (status) {
     this.props.dispatch(replyCompose(status, this.context.router));

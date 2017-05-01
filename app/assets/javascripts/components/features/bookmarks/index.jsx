@@ -27,11 +27,11 @@ class Bookmarks extends React.PureComponent {
 
   componentWillMount () {
     this.props.dispatch(fetchBookmarkedStatuses());
-  },
+  }
 
   handleScrollToBottom () {
     this.props.dispatch(expandBookmarkedStatuses());
-  },
+  }
 
   render () {
     const { statusIds, loaded, intl, me } = this.props;
@@ -52,7 +52,7 @@ class Bookmarks extends React.PureComponent {
     );
   }
 
-});
+};
 
 Bookmarks.propTypes = {
   params: PropTypes.object.isRequired,

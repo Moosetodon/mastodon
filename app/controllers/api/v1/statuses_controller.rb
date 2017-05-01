@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Api::V1::StatusesController < ApiController
-  before_action :authorize_if_got_token, except:            [:create, :destroy, :reblog, :unreblog, :favourite, :bookmark, :unfavourite]
-  before_action -> { doorkeeper_authorize! :write }, only:  [:create, :destroy, :reblog, :unreblog, :favourite, :bookmark, :unfavourite]
+  before_action :authorize_if_got_token, except:            [:create, :destroy, :reblog, :unreblog, :favourite, :unfavourite, :bookmark, :unbookmark]
+  before_action -> { doorkeeper_authorize! :write }, only:  [:create, :destroy, :reblog, :unreblog, :favourite, :unfavourite, :bookmark, :unbookmark]
   before_action :require_user!, except: [:show, :context, :card, :reblogged_by, :favourited_by]
   before_action :set_status, only:      [:show, :context, :card, :reblogged_by, :favourited_by]
 
