@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import LoadingIndicator from '../../components/loading_indicator';
 import { fetchBookmarkedStatuses, expandBookmarkedStatuses } from '../../actions/bookmarks';
@@ -47,7 +47,7 @@ class Bookmarks extends React.PureComponent {
     return (
       <Column icon='floppy-o' heading={intl.formatMessage(messages.heading)}>
         <ColumnBackButtonSlim />
-        <StatusList statusIds={statusIds} me={me} onScrollToBottom={this.handleScrollToBottom} />
+        <StatusList {...this.props} scrollKey='bookmarks' onScrollToBottom={this.handleScrollToBottom} />
       </Column>
     );
   }

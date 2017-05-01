@@ -115,7 +115,7 @@ class StatusActionBar extends React.PureComponent {
         <div className='status__action-bar-button-wrapper'><IconButton animate={true} active={status.get('bookmarked')} title={intl.formatMessage(messages.bookmark)} icon='floppy-o' onClick={this.handleBookmarkClick} activeStyle={{ color: '#457cff' }} /></div>
 
         <div className='status__action-bar-dropdown'>
-          <DropdownMenu items={menu} icon='ellipsis-h' size={18} direction="right" ariaLabel="More"/>
+          <DropdownMenu items={menu} icon='ellipsis-h' size={18} direction="left" ariaLabel="More"/>
         </div>
       </div>
     );
