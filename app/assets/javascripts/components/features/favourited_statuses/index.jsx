@@ -47,7 +47,7 @@ class Favourites extends React.PureComponent {
     return (
       <Column icon='beer' heading={intl.formatMessage(messages.heading)}>
         <ColumnBackButtonSlim />
-        <StatusList {...this.props} onScrollToBottom={this.handleScrollToBottom} />
+        <StatusList {...this.props} scrollKey='favourited_statuses' onScrollToBottom={this.handleScrollToBottom} />
       </Column>
     );
   }

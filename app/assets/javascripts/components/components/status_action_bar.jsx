@@ -111,7 +111,7 @@ class StatusActionBar extends React.PureComponent {
       <div className='status__action-bar'>
         <div className='status__action-bar-button-wrapper'><IconButton title={reply_title} icon={reply_icon} onClick={this.handleReplyClick} /></div>
         <div className='status__action-bar-button-wrapper'><IconButton disabled={reblog_disabled} active={status.get('reblogged')} title={reblog_disabled ? intl.formatMessage(messages.cannot_reblog) : intl.formatMessage(messages.reblog)} icon={reblogIcon} onClick={this.handleReblogClick} /></div>
-        <div className='status__action-bar-button-wrapper'><IconButton animate={true} active={status.get('favourited')} title={intl.formatMessage(messages.favourite)} icon='beer' onClick={this.handleFavouriteClick} className='beer-icon' /></div>
+        <div className='status__action-bar-button-wrapper'><IconButton animate={true} active={status.get('favourited')} title={intl.formatMessage(messages.favourite)} icon='beer' onClick={this.handleFavouriteClick} className='star-icon' /></div>
         <div className='status__action-bar-button-wrapper'><IconButton animate={true} active={status.get('bookmarked')} title={intl.formatMessage(messages.bookmark)} icon='floppy-o' onClick={this.handleBookmarkClick} activeStyle={{ color: '#457cff' }} /></div>
 
         <div className='status__action-bar-dropdown'>
