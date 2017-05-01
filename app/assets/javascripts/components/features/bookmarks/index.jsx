@@ -18,18 +18,12 @@ const mapStateToProps = state => ({
   me: state.getIn(['meta', 'me'])
 });
 
-const Bookmarks = React.createClass({
+class Bookmarks extends React.PureComponent {
 
-  propTypes: {
-    params: React.PropTypes.object.isRequired,
-    dispatch: React.PropTypes.func.isRequired,
-    statusIds: ImmutablePropTypes.list.isRequired,
-    loaded: React.PropTypes.bool,
-    intl: React.PropTypes.object.isRequired,
-    me: React.PropTypes.number.isRequired
-  },
-
-  mixins: [PureRenderMixin],
+  constructor (props, context) {
+    super(props, context);
+    this.handleScrollToBottom = this.handleScrollToBottom.bind(this);
+  }
 
   componentWillMount () {
     this.props.dispatch(fetchBookmarkedStatuses());
@@ -59,5 +53,14 @@ const Bookmarks = React.createClass({
   }
 
 });
+
+Bookmarks.propTypes = {
+  params: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  statusIds: ImmutablePropTypes.list.isRequired,
+  loaded: PropTypes.bool,
+  intl: PropTypes.object.isRequired,
+  me: PropTypes.number.isRequired
+};
 
 export default connect(mapStateToProps)(injectIntl(Bookmarks));
