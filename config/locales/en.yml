@@ -282,7 +282,7 @@ en:
         other: "%{count} new notifications since your last visit \U0001F418"
     favourite:
       body: 'Your status was sociabled by %{name}:'
-      subject: "%{name} drank to your status"
+      subject: "%{name} raised a glass to your status"
     follow:
       body: "%{name} is now following you!"
       subject: "%{name} is now following you"
