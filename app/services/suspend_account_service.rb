@@ -21,6 +21,7 @@ class SuspendAccountService < BaseService
     @account.stream_entries.destroy_all
     @account.notifications.destroy_all
     @account.favourites.destroy_all
+    @account.bookmarks.destroy_all
     @account.active_relationships.destroy_all
     @account.passive_relationships.destroy_all
   end

@@ -31,6 +31,7 @@ class Account < ApplicationRecord
   has_many :stream_entries, inverse_of: :account, dependent: :destroy
   has_many :statuses, inverse_of: :account, dependent: :destroy
   has_many :favourites, inverse_of: :account, dependent: :destroy
+  has_many :bookmarks, inverse_of: :account, dependent: :destroy
   has_many :mentions, inverse_of: :account, dependent: :destroy
   has_many :notifications, inverse_of: :account, dependent: :destroy
 
@@ -142,6 +143,10 @@ class Account < ApplicationRecord
 
   def favourited?(status)
     status.proper.favourites.where(account: self).count.positive?
+  end
+
+  def bookmarked?(status)
+    Bookmark.where(account: self, status: status).count.positive?
   end
 
   def reblogged?(status)

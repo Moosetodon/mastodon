@@ -25,6 +25,9 @@ import {
   UNREBLOG_SUCCESS,
   FAVOURITE_SUCCESS,
   UNFAVOURITE_SUCCESS,
+  BOOKMARK_SUCCESS,
+  UNBOOKMARK_SUCCESS,
+  BOOKMARKS_FETCH_SUCCESS,
   REBLOGS_FETCH_SUCCESS,
   FAVOURITES_FETCH_SUCCESS
 } from '../actions/interactions';
@@ -47,6 +50,11 @@ import {
   FAVOURITED_STATUSES_FETCH_SUCCESS,
   FAVOURITED_STATUSES_EXPAND_SUCCESS
 } from '../actions/favourites';
+import {
+  BOOKMARKED_STATUSES_FETCH_SUCCESS,
+  BOOKMARKED_STATUSES_EXPAND_SUCCESS 
+} from '../actions/bookmarks';
+
 import { STORE_HYDRATE } from '../actions/store';
 import Immutable from 'immutable';
 
@@ -93,6 +101,7 @@ export default function accounts(state = initialState, action) {
   case FOLLOWING_EXPAND_SUCCESS:
   case REBLOGS_FETCH_SUCCESS:
   case FAVOURITES_FETCH_SUCCESS:
+  case BOOKMARKS_FETCH_SUCCESS:
   case COMPOSE_SUGGESTIONS_READY:
   case FOLLOW_REQUESTS_FETCH_SUCCESS:
   case FOLLOW_REQUESTS_EXPAND_SUCCESS:
@@ -112,11 +121,15 @@ export default function accounts(state = initialState, action) {
   case CONTEXT_FETCH_SUCCESS:
   case FAVOURITED_STATUSES_FETCH_SUCCESS:
   case FAVOURITED_STATUSES_EXPAND_SUCCESS:
+  case BOOKMARKED_STATUSES_FETCH_SUCCESS:
+  case BOOKMARKED_STATUSES_EXPAND_SUCCESS:
     return normalizeAccountsFromStatuses(state, action.statuses);
   case REBLOG_SUCCESS:
   case FAVOURITE_SUCCESS:
   case UNREBLOG_SUCCESS:
   case UNFAVOURITE_SUCCESS:
+  case BOOKMARK_SUCCESS:
+  case UNBOOKMARK_SUCCESS:
     return normalizeAccountFromStatus(state, action.response);
   case TIMELINE_UPDATE:
   case STATUS_FETCH_SUCCESS:

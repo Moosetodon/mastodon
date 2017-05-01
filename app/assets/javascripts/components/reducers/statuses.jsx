@@ -6,7 +6,11 @@ import {
   FAVOURITE_REQUEST,
   FAVOURITE_SUCCESS,
   FAVOURITE_FAIL,
-  UNFAVOURITE_SUCCESS
+  UNFAVOURITE_SUCCESS,
+  BOOKMARK_REQUEST,
+  BOOKMARK_SUCCESS,
+  BOOKMARK_FAIL,
+  UNBOOKMARK_SUCCESS
 } from '../actions/interactions';
 import {
   STATUS_FETCH_SUCCESS,
@@ -32,6 +36,10 @@ import {
   FAVOURITED_STATUSES_FETCH_SUCCESS,
   FAVOURITED_STATUSES_EXPAND_SUCCESS
 } from '../actions/favourites';
+import {
+  BOOKMARKED_STATUSES_FETCH_SUCCESS,
+  BOOKMARKED_STATUSES_EXPAND_SUCCESS
+} from '../actions/bookmarks';
 import { SEARCH_FETCH_SUCCESS } from '../actions/search';
 import Immutable from 'immutable';
 
@@ -94,11 +102,17 @@ export default function statuses(state = initialState, action) {
   case UNREBLOG_SUCCESS:
   case FAVOURITE_SUCCESS:
   case UNFAVOURITE_SUCCESS:
+  case BOOKMARK_SUCCESS:
+  case UNBOOKMARK_SUCCESS:
     return normalizeStatus(state, action.response);
   case FAVOURITE_REQUEST:
     return state.setIn([action.status.get('id'), 'favourited'], true);
   case FAVOURITE_FAIL:
     return state.setIn([action.status.get('id'), 'favourited'], false);
+  case BOOKMARK_REQUEST:
+    return state.setIn([action.status.get('id'), 'bookmarks'], true);
+  case BOOKMARK_FAIL:
+    return state.setIn([action.status.get('id'), 'bookmarks'], false);
   case REBLOG_REQUEST:
     return state.setIn([action.status.get('id'), 'reblogged'], true);
   case REBLOG_FAIL:
@@ -112,6 +126,8 @@ export default function statuses(state = initialState, action) {
   case NOTIFICATIONS_EXPAND_SUCCESS:
   case FAVOURITED_STATUSES_FETCH_SUCCESS:
   case FAVOURITED_STATUSES_EXPAND_SUCCESS:
+  case BOOKMARKED_STATUSES_FETCH_SUCCESS:
+  case BOOKMARKED_STATUSES_EXPAND_SUCCESS:
   case SEARCH_FETCH_SUCCESS:
     return normalizeStatuses(state, action.statuses);
   case TIMELINE_DELETE:

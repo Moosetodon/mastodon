@@ -17,6 +17,7 @@ const messages = defineMessages({
   follow_requests: { id: 'navigation_bar.follow_requests', defaultMessage: 'Follow requests' },
   sign_out: { id: 'navigation_bar.logout', defaultMessage: 'Logout' },
   favourites: { id: 'navigation_bar.favourites', defaultMessage: 'Favourites' },
+  bookmarks: { id: 'navigation_bar.bookmarks', defaultMessage: 'Bookmarks' },
   blocks: { id: 'navigation_bar.blocks', defaultMessage: 'Blocked users' },
   mutes: { id: 'navigation_bar.mutes', defaultMessage: 'Muted users' },
   info: { id: 'navigation_bar.info', defaultMessage: 'Extended information' }
@@ -39,7 +40,9 @@ const GettingStarted = ({ intl, me }) => {
         <ColumnSubheading text={intl.formatMessage(messages.navigation_subheading)}/>
         <ColumnLink icon='users' hideOnMobile={true} text={intl.formatMessage(messages.community_timeline)} to='/timelines/public/local' />
         <ColumnLink icon='globe' hideOnMobile={true} text={intl.formatMessage(messages.public_timeline)} to='/timelines/public' />
-        <ColumnLink icon='star' text={intl.formatMessage(messages.favourites)} to='/favourites' />
+        <ColumnLink icon='beer' text={intl.formatMessage(messages.favourites)} to='/favourites' />
+
+        <ColumnLink icon='floppy-o' text={intl.formatMessage(messages.bookmarks)} to='/bookmarks' />
         {followRequests}
         <ColumnLink icon='volume-off' text={intl.formatMessage(messages.mutes)} to='/mutes' />
         <ColumnLink icon='ban' text={intl.formatMessage(messages.blocks)} to='/blocks' />

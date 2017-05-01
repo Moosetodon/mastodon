@@ -2,23 +2,23 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import LoadingIndicator from '../../components/loading_indicator';
-import { fetchFavouritedStatuses, expandFavouritedStatuses } from '../../actions/favourites';
+import { fetchBookmarkedStatuses, expandBookmarkedStatuses } from '../../actions/bookmarks';
 import Column from '../ui/components/column';
 import StatusList from '../../components/status_list';
 import ColumnBackButtonSlim from '../../components/column_back_button_slim';
 import { defineMessages, injectIntl } from 'react-intl';
 
 const messages = defineMessages({
-  heading: { id: 'column.favourites', defaultMessage: 'Favourites' }
+  heading: { id: 'column.bookmarks', defaultMessage: 'Bookmarks' }
 });
 
 const mapStateToProps = state => ({
-  statusIds: state.getIn(['status_lists', 'favourites', 'items']),
-  loaded: state.getIn(['status_lists', 'favourites', 'loaded']),
+  statusIds: state.getIn(['status_lists', 'bookmarks', 'items']),
+  loaded: state.getIn(['status_lists', 'bookmarks', 'loaded']),
   me: state.getIn(['meta', 'me'])
 });
 
-class Favourites extends React.PureComponent {
+class Bookmarks extends React.PureComponent {
 
   constructor (props, context) {
     super(props, context);
@@ -26,11 +26,11 @@ class Favourites extends React.PureComponent {
   }
 
   componentWillMount () {
-    this.props.dispatch(fetchFavouritedStatuses());
+    this.props.dispatch(fetchBookmarkedStatuses());
   }
 
   handleScrollToBottom () {
-    this.props.dispatch(expandFavouritedStatuses());
+    this.props.dispatch(expandBookmarkedStatuses());
   }
 
   render () {
@@ -45,16 +45,16 @@ class Favourites extends React.PureComponent {
     }
 
     return (
-      <Column icon='beer' heading={intl.formatMessage(messages.heading)}>
+      <Column icon='floppy-o' heading={intl.formatMessage(messages.heading)}>
         <ColumnBackButtonSlim />
-        <StatusList {...this.props} scrollKey='favourited_statuses' onScrollToBottom={this.handleScrollToBottom} />
+        <StatusList {...this.props} scrollKey='bookmarks' onScrollToBottom={this.handleScrollToBottom} />
       </Column>
     );
   }
 
-}
+};
 
-Favourites.propTypes = {
+Bookmarks.propTypes = {
   params: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   statusIds: ImmutablePropTypes.list.isRequired,
@@ -63,4 +63,4 @@ Favourites.propTypes = {
   me: PropTypes.number.isRequired
 };
 
-export default connect(mapStateToProps)(injectIntl(Favourites));
+export default connect(mapStateToProps)(injectIntl(Bookmarks));

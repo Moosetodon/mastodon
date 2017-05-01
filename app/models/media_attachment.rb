@@ -29,7 +29,7 @@ class MediaAttachment < ApplicationRecord
                     processors: ->(f) { file_processors f },
                     convert_options: { all: '-quality 90 -strip' }
   validates_attachment_content_type :file, content_type: IMAGE_MIME_TYPES + VIDEO_MIME_TYPES
-  validates_attachment_size :file, less_than: 8.megabytes
+  validates_attachment_size :file, less_than: ->(record) { attachment_size_option_value record }
 
   validates :account, presence: true
 
@@ -89,6 +89,15 @@ class MediaAttachment < ApplicationRecord
         [:video_transcoder]
       else
         [:thumbnail]
+      end
+    end
+
+    def attachment_size_option_value(record)
+      supporter = record.account.supporter
+      if supporter
+        16.megabytes
+      else
+        8.megabytes
       end
     end
   end

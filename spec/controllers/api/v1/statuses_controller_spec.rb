@@ -183,6 +183,45 @@ RSpec.describe Api::V1::StatusesController, type: :controller do
         expect(user.account.favourited?(status)).to be false
       end
     end
+    describe 'POST #bookmark' do
+      let(:status) { Fabricate(:status, account: user.account) }
+
+      before do
+        post :bookmark, params: { id: status.id }
+      end
+
+      it 'returns http success' do
+        expect(response).to have_http_status(:success)
+      end
+
+      it 'updates bookmarked the attribute' do
+        expect(user.account.bookmarked?(status)).to be true
+      end
+
+      it 'return json with updated attributes' do
+        hash_body = body_as_json
+
+        expect(hash_body[:id]).to eq status.id
+        expect(hash_body[:bookmarked]).to be true
+      end
+    end
+
+    describe 'POST #unbookmark' do
+      let(:status) { Fabricate(:status, account: user.account) }
+
+      before do
+        post :bookmark,   params: { id: status.id }
+        post :unbookmark, params: { id: status.id }
+      end
+
+      it 'returns http success' do
+        expect(response).to have_http_status(:success)
+      end
+
+      it 'updates the bookmarked attribute' do
+        expect(user.account.bookmarked?(status)).to be false
+      end
+    end
   end
 
   context 'without an oauth token' do

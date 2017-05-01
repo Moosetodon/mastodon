@@ -2,10 +2,19 @@ import {
   FAVOURITED_STATUSES_FETCH_SUCCESS,
   FAVOURITED_STATUSES_EXPAND_SUCCESS
 } from '../actions/favourites';
+import {
+  BOOKMARKED_STATUSES_FETCH_SUCCESS,
+  BOOKMARKED_STATUSES_EXPAND_SUCCESS
+} from '../actions/bookmarks';
 import Immutable from 'immutable';
 
 const initialState = Immutable.Map({
   favourites: Immutable.Map({
+    next: null,
+    loaded: false,
+    items: Immutable.List()
+  }),
+  bookmarks: Immutable.Map({
     next: null,
     loaded: false,
     items: Immutable.List()
@@ -33,6 +42,10 @@ export default function statusLists(state = initialState, action) {
     return normalizeList(state, 'favourites', action.statuses, action.next);
   case FAVOURITED_STATUSES_EXPAND_SUCCESS:
     return appendToList(state, 'favourites', action.statuses, action.next);
+  case BOOKMARKED_STATUSES_FETCH_SUCCESS:
+    return normalizeList(state, 'bookmarks', action.statuses, action.next);
+  case BOOKMARKED_STATUSES_EXPAND_SUCCESS:
+    return appendToList(state, 'bookmarks', action.statuses, action.next);
   default:
     return state;
   }

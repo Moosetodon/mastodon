@@ -38,6 +38,7 @@ import Notifications from '../features/notifications';
 import FollowRequests from '../features/follow_requests';
 import GenericNotFound from '../features/generic_not_found';
 import FavouritedStatuses from '../features/favourited_statuses';
+import Bookmarks from '../features/bookmarks';
 import Blocks from '../features/blocks';
 import Mutes from '../features/mutes';
 import Report from '../features/report';
@@ -134,7 +135,8 @@ class Container extends React.PureComponent {
           {pathname: '/timelines/public/local', component: CommunityTimeline},
 
           {pathname: '/notifications', component: Notifications},
-          {pathname: '/favourites', component: FavouritedStatuses}
+          {pathname: '/favourites', component: FavouritedStatuses},
+          {pathname: '/bookmarks', component: Bookmarks}
         ],
       };
     }, () => {

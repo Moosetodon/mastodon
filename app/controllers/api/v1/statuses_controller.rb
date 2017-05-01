@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Api::V1::StatusesController < ApiController
-  before_action :authorize_if_got_token, except:            [:create, :destroy, :reblog, :unreblog, :favourite, :unfavourite]
-  before_action -> { doorkeeper_authorize! :write }, only:  [:create, :destroy, :reblog, :unreblog, :favourite, :unfavourite]
+  before_action :authorize_if_got_token, except:            [:create, :destroy, :reblog, :unreblog, :favourite, :unfavourite, :bookmark, :unbookmark]
+  before_action -> { doorkeeper_authorize! :write }, only:  [:create, :destroy, :reblog, :unreblog, :favourite, :unfavourite, :bookmark, :unbookmark]
   before_action :require_user!, except: [:show, :context, :card, :reblogged_by, :favourited_by]
   before_action :set_status, only:      [:show, :context, :card, :reblogged_by, :favourited_by]
 
@@ -103,6 +103,21 @@ class Api::V1::StatusesController < ApiController
     UnfavouriteWorker.perform_async(current_user.account_id, @status.id)
 
     render :show
+  end
+
+  def bookmark
+    @status = Bookmark.create!(account: current_user.account, status: Status.find(params[:id])).status.reload
+    render action: :show
+  end
+
+  def unbookmark
+    @status        = Status.find(params[:id])
+    @bookmarks_map = { @status.id => false }
+
+    bookmark = Bookmark.find_by!(account: current_user.account, status: @status.id)
+    bookmark.destroy!
+
+    render action: :show
   end
 
   private

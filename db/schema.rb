@@ -63,6 +63,14 @@ ActiveRecord::Schema.define(version: 20170425202925) do
     t.index ["account_id", "target_account_id"], name: "index_blocks_on_account_id_and_target_account_id", unique: true, using: :btree
   end
 
+  create_table "bookmarks", force: :cascade do |t|
+    t.integer  "account_id", null: false
+    t.integer  "status_id",  null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "status_id"], name: "index_bookmarks_on_account_id_and_status_id", unique: true, using: :btree
+  end
+
   create_table "domain_blocks", force: :cascade do |t|
     t.string   "domain",       default: "", null: false
     t.datetime "created_at",                null: false

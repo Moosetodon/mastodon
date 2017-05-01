@@ -39,12 +39,12 @@ RSpec.describe NotificationMailer, type: :mailer do
     let(:mail) { NotificationMailer.favourite(own_status.account, Notification.create!(account: receiver.account, activity: favourite)) }
 
     it "renders the headers" do
-      expect(mail.subject).to eq("bob favourited your status")
+      expect(mail.subject).to eq("bob raised a glass to your status")
       expect(mail.to).to eq([receiver.email])
     end
 
     it "renders the body" do
-      expect(mail.body.encoded).to match("Your status was favourited by bob")
+      expect(mail.body.encoded).to match("Your status was sociabled by bob")
     end
   end
 
