@@ -95,7 +95,7 @@ const en = {
   "navigation_bar.mutes": "Muted users",
   "navigation_bar.preferences": "Preferences",
   "navigation_bar.public_timeline": "Federated timeline",
-  "notification.favourite": "{name} drank to your status",
+  "notification.favourite": "{name} raised a glass to your status",
   "notification.follow": "{name} followed you",
   "notification.mention": "{name} mentioned you",
   "notification.reblog": "{name} boosted your status",
