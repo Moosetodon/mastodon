@@ -45,7 +45,7 @@ class GettingStarted extends ImmutablePureComponent {
           <ColumnSubheading text={intl.formatMessage(messages.navigation_subheading)}/>
           <ColumnLink icon='users' hideOnMobile={true} text={intl.formatMessage(messages.community_timeline)} to='/timelines/public/local' />
           <ColumnLink icon='globe' hideOnMobile={true} text={intl.formatMessage(messages.public_timeline)} to='/timelines/public' />
-          <ColumnLink icon='star' text={intl.formatMessage(messages.favourites)} to='/favourites' />
+          <ColumnLink icon='beer' text={intl.formatMessage(messages.favourites)} to='/favourites' />
           {followRequests}
           <ColumnLink icon='volume-off' text={intl.formatMessage(messages.mutes)} to='/mutes' />
           <ColumnLink icon='ban' text={intl.formatMessage(messages.blocks)} to='/blocks' />

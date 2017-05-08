@@ -20,7 +20,7 @@
     = image_tag asset_pack_path('logo.png')
     = Setting.site_title
 
-  %p= t('about.about_mastodon').html_safe
+  %p!= t('about.about_mastodon')
 
   .wrapper
     %h2= t('about.welcome')
@@ -70,7 +70,7 @@
 
   - unless @instance_presenter.site_description.blank?
     %h3= t('about.description_headline', domain: site_hostname)
-    %p= @instance_presenter.site_description.html_safe
+    %p!= @instance_presenter.site_description
 
   .actions
     .info

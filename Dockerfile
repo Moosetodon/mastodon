@@ -29,6 +29,9 @@ RUN echo "@edge https://nl.alpinelinux.org/alpine/edge/main" >> /etc/apk/reposit
     file \
     imagemagick@edge \
     ca-certificates \
+    g++ \
+    protobuf-dev \
+    protobuf \
  && npm install -g npm@3 && npm install -g yarn \
  && update-ca-certificates \
  && rm -rf /tmp/* /var/cache/apk/*

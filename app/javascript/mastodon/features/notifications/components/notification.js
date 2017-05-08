@@ -36,7 +36,7 @@ class Notification extends ImmutablePureComponent {
       <div className='notification notification-favourite'>
         <div className='notification__message'>
           <div className='notification__favourite-icon-wrapper'>
-            <i className='fa fa-fw fa-star star-icon'/>
+            <i className='fa fa-fw fa-beer star-icon'/>
           </div>
           <FormattedMessage id='notification.favourite' defaultMessage='{name} favourited your status' values={{ name: link }} />
         </div>
