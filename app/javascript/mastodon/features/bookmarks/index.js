@@ -1,3 +1,4 @@
+import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
@@ -7,6 +8,7 @@ import Column from '../ui/components/column';
 import StatusList from '../../components/status_list';
 import ColumnBackButtonSlim from '../../components/column_back_button_slim';
 import { defineMessages, injectIntl } from 'react-intl';
+import ImmutablePureComponent from 'react-immutable-pure-component';
 
 const messages = defineMessages({
   heading: { id: 'column.bookmarks', defaultMessage: 'Bookmarks' }
@@ -18,7 +20,7 @@ const mapStateToProps = state => ({
   me: state.getIn(['meta', 'me'])
 });
 
-class Bookmarks extends React.PureComponent {
+class Bookmarks extends ImmutablePureComponent {
 
   constructor (props, context) {
     super(props, context);
@@ -55,7 +57,6 @@ class Bookmarks extends React.PureComponent {
 };
 
 Bookmarks.propTypes = {
-  params: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
   statusIds: ImmutablePropTypes.list.isRequired,
   loaded: PropTypes.bool,

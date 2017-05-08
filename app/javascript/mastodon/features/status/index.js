@@ -61,6 +61,7 @@ class Status extends ImmutablePureComponent {
   constructor (props, context) {
     super(props, context);
     this.handleFavouriteClick = this.handleFavouriteClick.bind(this);
+    this.handleBookmarkClick = this.handleBookmarkClick.bind(this);
     this.handleReplyClick = this.handleReplyClick.bind(this);
     this.handleModalReblog = this.handleModalReblog.bind(this);
     this.handleReblogClick = this.handleReblogClick.bind(this);
