@@ -13,6 +13,7 @@ node(:links) do
     { rel: 'self', type: 'application/activity+json', href: TagManager.instance.url_for(@account) },
     { rel: 'salmon', href: api_salmon_url(@account.id) },
     { rel: 'magic-public-key', href: "data:application/magic-public-key,#{@magic_key}" },
+    { rel: 'webfinger-auth', href: webfinger_auth_url(@account) },
     { rel: 'http://ostatus.org/schema/1.0/subscribe', template: "#{authorize_follow_url}?acct={uri}" },
   ]
 end

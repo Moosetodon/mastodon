@@ -18,6 +18,10 @@ Rails.application.routes.draw do
   get '.well-known/host-meta', to: 'well_known/host_meta#show', as: :host_meta, defaults: { format: 'xml' }
   get '.well-known/webfinger', to: 'well_known/webfinger#show', as: :webfinger
 
+  get '.well-known/webfinger-auth/@:account_username', to: 'well_known/webfinger_auth#show', as: :webfinger_auth
+  post '.well-known/webfinger-auth/@:account_username', to: 'well_known/webfinger_auth#create', as: :webfinger_auth_accept
+  delete '.well-known/webfinger-auth/@:account_username', to: 'well_known/webfinger_auth#destroy', as: :webfinger_auth_deny
+
   devise_for :users, path: 'auth', controllers: {
     sessions:           'auth/sessions',
     registrations:      'auth/registrations',

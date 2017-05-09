@@ -1,0 +1,29 @@
+- content_for :page_title do
+  Webfinger Identification for #{@client[:name]}
+
+.wrapper
+  %h1
+    = image_tag asset_pack_path('logo.png')
+    = Setting.site_title 
+  %h2 Webfinger Identification
+
+  %p
+    %em #{@client[:name]} 
+    wants to verify that you are who you say you are. If
+    you agree to sign their token and send it back, it will provide proof 
+    that it is indeed you.
+
+  .form-container
+    = form_tag webfinger_auth_path, method: :post, class: 'simple_form' do
+      = hidden_field_tag :token, params[:token]
+      = hidden_field_tag :client, params[:client_id]
+      = hidden_field_tag :callback, params[:callback]
+      = button_tag "Sign & Return to site", type: :submit
+
+    %h2 - OR -
+
+    = form_tag webfinger_auth_path, method: :delete, class: 'simple_form' do
+      = hidden_field_tag :token, params[:token]
+      = hidden_field_tag :client, params[:client_id]
+      = hidden_field_tag :callback, params[:callback]
+      = button_tag "Deny identification", type: :submit, class: 'negative'

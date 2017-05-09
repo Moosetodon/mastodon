@@ -1,0 +1,56 @@
+.webfinger-auth-body {
+  .wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    color: $color3;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+
+  h1 {
+    font: 46px/52px 'mastodon-font-sans-serif', sans-serif;
+    font-weight: 600;
+    color: $color4;
+    padding: 20px 0;
+
+    img {
+      margin-bottom: -5px;
+      margin-right: 5px;
+      width: 46px;
+      height: 46px;
+    }
+  }
+
+  h2 {
+    font-family: 'mastodon-font-display', sans-serif;
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: $color2;
+  }
+
+
+  p {
+    font: 16px/28px 'mastodon-font-sans-serif', sans-serif;
+    font-weight: 400;
+    margin-bottom: 12px;
+  }
+
+  em {
+    display: inline-block;
+    padding: 7px 7px 5px;
+    margin: 0 2px;
+    background: $color3;
+    color: $color1;
+    font: 16px/16px 'mastodon-font-sans-serif', sans-serif;
+    font-weight: 300;
+  }
+
+  .form-container h2 {
+    text-align: center;
+    line-height: 32px;
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+}
