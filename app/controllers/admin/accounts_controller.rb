@@ -25,6 +25,10 @@ module Admin
         :recent,
         :suspended,
         :supporter
+        :username,
+        :display_name,
+        :email,
+        :ip
       )
     end
   end

@@ -2,9 +2,10 @@ object @status
 
 extends 'api/v1/statuses/_show'
 
-node(:favourited, if: proc { !current_account.nil? }) { |status| defined?(@favourites_map) ? @favourites_map[status.id] : current_account.favourited?(status) }
-node(:bookmarked, if: proc { !current_account.nil? }) { |status| defined?(@bookmarks_map)  ? @bookmarks_map[status.id]  : current_account.bookmarked?(status) }
-node(:reblogged,  if: proc { !current_account.nil? }) { |status| defined?(@reblogs_map)    ? @reblogs_map[status.id]    : current_account.reblogged?(status) }
+node(:favourited, if: proc { !current_account.nil? }) { |status| defined?(@favourites_map) ? @favourites_map[status.id]         : current_account.favourited?(status) }
+node(:reblogged,  if: proc { !current_account.nil? }) { |status| defined?(@reblogs_map)    ? @reblogs_map[status.id]            : current_account.reblogged?(status) }
+node(:bookmarked, if: proc { !current_account.nil? }) { |status| defined?(@bookmarks_map)  ? @bookmarks_map[status.id]          : current_account.bookmarked?(status) }
+node(:muted,      if: proc { !current_account.nil? }) { |status| defined?(@mutes_map)      ? @mutes_map[status.conversation_id] : current_account.muting_conversation?(status.conversation) }
 
 child reblog: :reblog do
   extends 'api/v1/statuses/_show'
@@ -12,4 +13,5 @@ child reblog: :reblog do
   node(:favourited, if: proc { !current_account.nil? }) { |status| defined?(@favourites_map) ? @favourites_map[status.id] : current_account.favourited?(status) }
   node(:bookmarked, if: proc { !current_account.nil? }) { |status| defined?(@bookmarks_map)  ? @bookmarks_map[status.id]  : current_account.bookmarked?(status) }
   node(:reblogged,  if: proc { !current_account.nil? }) { |status| defined?(@reblogs_map)    ? @reblogs_map[status.id]    : current_account.reblogged?(status) }
+  node(:muted,      if: proc { !current_account.nil? }) { false }
 end

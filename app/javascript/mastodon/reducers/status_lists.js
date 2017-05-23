@@ -1,6 +1,6 @@
 import {
   FAVOURITED_STATUSES_FETCH_SUCCESS,
-  FAVOURITED_STATUSES_EXPAND_SUCCESS
+  FAVOURITED_STATUSES_EXPAND_SUCCESS,
 } from '../actions/favourites';
 import {
   BOOKMARKED_STATUSES_FETCH_SUCCESS,
@@ -18,7 +18,7 @@ const initialState = Immutable.Map({
     next: null,
     loaded: false,
     items: Immutable.List()
-  })
+  }),
 });
 
 const normalizeList = (state, listType, statuses, next) => {

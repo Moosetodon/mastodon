@@ -134,6 +134,8 @@ Rails.application.routes.draw do
           post :unfavourite
           post :bookmark
           post :unbookmark
+          post :mute
+          post :unmute
         end
       end
 
@@ -152,7 +154,8 @@ Rails.application.routes.draw do
       resources :bookmarks,  only: [:index]
       resources :reports,    only: [:index, :create]
 
-      resource :instance, only: [:show]
+      resource :instance,      only: [:show]
+      resource :domain_blocks, only: [:show, :create, :destroy]
 
       resources :follow_requests, only: [:index] do
         member do

@@ -94,12 +94,15 @@ class ApiController < ApplicationController
       @reblogs_map    = {}
       @favourites_map = {}
       @bookmarks_map  = {}
+      @mutes_map      = {}
       return
     end
 
-    status_ids      = statuses.compact.flat_map { |s| [s.id, s.reblog_of_id] }.uniq
-    @reblogs_map    = Status.reblogs_map(status_ids, current_account)
-    @favourites_map = Status.favourites_map(status_ids, current_account)
+    status_ids       = statuses.compact.flat_map { |s| [s.id, s.reblog_of_id] }.uniq
+    conversation_ids = statuses.compact.map(&:conversation_id).compact.uniq
+    @reblogs_map     = Status.reblogs_map(status_ids, current_account)
+    @favourites_map  = Status.favourites_map(status_ids, current_account)
     @bookmarks_map  = Status.bookmarks_map(status_ids, current_account)
+    @mutes_map       = Status.mutes_map(conversation_ids, current_account)
   end
 end

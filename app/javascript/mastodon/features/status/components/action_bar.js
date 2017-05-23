@@ -13,47 +13,53 @@ const messages = defineMessages({
   cannot_reblog: { id: 'status.cannot_reblog', defaultMessage: 'This post cannot be boosted' },
   favourite: { id: 'status.favourite', defaultMessage: 'Favourite' },
   bookmark: { id: 'status.bookmark', defaultMessage: 'Bookmark' },
-  report: { id: 'status.report', defaultMessage: 'Report @{name}' }
+  report: { id: 'status.report', defaultMessage: 'Report @{name}' },
 });
 
 class ActionBar extends React.PureComponent {
 
-  constructor (props, context) {
-    super(props, context);
-    this.handleReplyClick = this.handleReplyClick.bind(this);
-    this.handleReblogClick = this.handleReblogClick.bind(this);
-    this.handleFavouriteClick = this.handleFavouriteClick.bind(this);
-    this.handleBookmarkClick = this.handleBookmarkClick.bind(this);
-    this.handleDeleteClick = this.handleDeleteClick.bind(this);
-    this.handleMentionClick = this.handleMentionClick.bind(this);
-    this.handleReport = this.handleReport.bind(this);
-  }
+  static contextTypes = {
+    router: PropTypes.object,
+  };
 
-  handleReplyClick () {
+  static propTypes = {
+    status: ImmutablePropTypes.map.isRequired,
+    onReply: PropTypes.func.isRequired,
+    onReblog: PropTypes.func.isRequired,
+    onFavourite: PropTypes.func.isRequired,
+    onBookmark: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    onMention: PropTypes.func.isRequired,
+    onReport: PropTypes.func,
+    me: PropTypes.number.isRequired,
+    intl: PropTypes.object.isRequired,
+  };
+
+  handleReplyClick = () => {
     this.props.onReply(this.props.status);
   }
 
-  handleReblogClick (e) {
+  handleReblogClick = (e) => {
     this.props.onReblog(this.props.status, e);
   }
 
-  handleFavouriteClick () {
+  handleFavouriteClick = () => {
     this.props.onFavourite(this.props.status);
   }
 
-  handleBookmarkClick () {
+  handleBookmarkClick = () => {
     this.props.onBookmark(this.props.status);
   }
 
-  handleDeleteClick () {
+  handleDeleteClick = () => {
     this.props.onDelete(this.props.status);
   }
 
-  handleMentionClick () {
+  handleMentionClick = () => {
     this.props.onMention(this.props.status.get('account'), this.context.router);
   }
 
-  handleReport () {
+  handleReport = () => {
     this.props.onReport(this.props.status);
     this.context.router.push('/report');
   }
@@ -83,28 +89,14 @@ class ActionBar extends React.PureComponent {
         <div className='detailed-status__button'><IconButton disabled={reblog_disabled} active={status.get('reblogged')} title={reblog_disabled ? intl.formatMessage(messages.cannot_reblog) : intl.formatMessage(messages.reblog)} icon={reblogIcon} onClick={this.handleReblogClick} /></div>
         <div className='detailed-status__button'><IconButton animate={true} active={status.get('favourited')} title={intl.formatMessage(messages.favourite)} icon='beer' onClick={this.handleFavouriteClick} activeStyle={{ color: '#ca8f04' }} /></div>
         <div className='detailed-status__button'><IconButton animate={true} active={status.get('bookmarked')} title={intl.formatMessage(messages.bookmark)} icon='floppy-o' onClick={this.handleBookmarkClick} activeStyle={{ color: '#457cff' }} /></div>
-        <div className='detailed-status__button'><DropdownMenu size={18} icon='ellipsis-h' items={menu} direction="left" ariaLabel="More" /></div>
+
+        <div className='detailed-status__action-bar-dropdown'>
+          <DropdownMenu size={18} icon='ellipsis-h' items={menu} direction="left" ariaLabel="More" />
+        </div>
       </div>
     );
   }
 
 }
-
-ActionBar.contextTypes = {
-  router: PropTypes.object
-};
-
-ActionBar.propTypes = {
-  status: ImmutablePropTypes.map.isRequired,
-  onReply: PropTypes.func.isRequired,
-  onReblog: PropTypes.func.isRequired,
-  onFavourite: PropTypes.func.isRequired,
-  onBookmark: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  onMention: PropTypes.func.isRequired,
-  onReport: PropTypes.func,
-  me: PropTypes.number.isRequired,
-  intl: PropTypes.object.isRequired
-};
 
 export default injectIntl(ActionBar);
