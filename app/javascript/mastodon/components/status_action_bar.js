@@ -145,8 +145,8 @@ class StatusActionBar extends ImmutablePureComponent {
       <div className='status__action-bar'>
         <IconButton className='status__action-bar-button' title={replyTitle} icon={replyIcon} onClick={this.handleReplyClick} />
         <IconButton className='status__action-bar-button' disabled={reblogDisabled} active={status.get('reblogged')} title={reblogDisabled ? intl.formatMessage(messages.cannot_reblog) : intl.formatMessage(messages.reblog)} icon={reblogIcon} onClick={this.handleReblogClick} />
-        <IconButton className='status__action-bar-button beer-icon' animate={true} active={status.get('favourited')} title={intl.formatMessage(messages.favourite)} icon='beer' onClick={this.handleFavouriteClick} />
-        <IconButton className='status__action-bar-button' animate={true} active={status.get('bookmarked')} title={intl.formatMessage(messages.bookmark)} icon='floppy-o' onClick={this.handleBookmarkClick} />
+        <IconButton className='status__action-bar-button beer-icon' animate={true} active={status.get('favourited')} title={intl.formatMessage(messages.favourite)} icon='beer' onClick={this.handleFavouriteClick} activeStyle={{ color: '#ca8f04' }} />
+        <IconButton className='status__action-bar-button' animate={true} active={status.get('bookmarked')} title={intl.formatMessage(messages.bookmark)} icon='floppy-o' onClick={this.handleBookmarkClick} activeStyle={{ color: '#457cff' }} />
 
         <div className='status__action-bar-dropdown'>
           <DropdownMenu items={menu} icon='ellipsis-h' size={18} direction="left" ariaLabel="More"/>
