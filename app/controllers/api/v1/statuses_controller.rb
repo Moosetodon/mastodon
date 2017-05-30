@@ -124,6 +124,7 @@ class Api::V1::StatusesController < ApiController
     bookmark.destroy!
 
     render action: :show
+  end
 
   def mute
     current_account.mute_conversation!(@conversation)
