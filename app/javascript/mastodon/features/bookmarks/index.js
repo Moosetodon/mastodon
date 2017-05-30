@@ -22,10 +22,13 @@ const mapStateToProps = state => ({
 
 class Bookmarks extends ImmutablePureComponent {
 
-  constructor (props, context) {
-    super(props, context);
-    this.handleScrollToBottom = this.handleScrollToBottom.bind(this);
-  }
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    statusIds: ImmutablePropTypes.list.isRequired,
+    loaded: PropTypes.bool,
+    intl: PropTypes.object.isRequired,
+    me: PropTypes.number.isRequired,
+  };
 
   componentWillMount () {
     this.props.dispatch(fetchBookmarkedStatuses());
@@ -54,14 +57,6 @@ class Bookmarks extends ImmutablePureComponent {
     );
   }
 
-};
-
-Bookmarks.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  statusIds: ImmutablePropTypes.list.isRequired,
-  loaded: PropTypes.bool,
-  intl: PropTypes.object.isRequired,
-  me: PropTypes.number.isRequired
-};
+}
 
 export default connect(mapStateToProps)(injectIntl(Bookmarks));

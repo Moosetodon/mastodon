@@ -243,7 +243,6 @@ export function unbookmarkFail(status, error) {
   };
 };
 
-
 export function fetchReblogs(id) {
   return (dispatch, getState) => {
     dispatch(fetchReblogsRequest(id));

@@ -149,6 +149,8 @@ class Mastodon extends React.PureComponent {
               <Route path='notifications' component={Notifications} />
               <Route path='favourites' component={FavouritedStatuses} />
 
+              <Route path='bookmarks' component={Bookmarks} />
+
               <Route path='statuses/new' component={Compose} />
               <Route path='statuses/:statusId' component={Status} />
               <Route path='statuses/:statusId/reblogs' component={Reblogs} />

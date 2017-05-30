@@ -3141,13 +3141,8 @@ button.icon-button.active i.fa-retweet {
 
 .boost-modal,
 .confirmation-modal {
-<<<<<<< HEAD
-  background: $color5; // white
+  background: $white; // white
   color: $color1;
-=======
-  background: lighten($ui-secondary-color, 8%);
-  color: $ui-base-color;
->>>>>>> upstream/master
   border-radius: 8px;
   overflow: hidden;
   max-width: 90vw;
