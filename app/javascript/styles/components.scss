@@ -1281,6 +1281,23 @@
   }
 }
 
+@media screen and (min-width: 1397px) { /* Width of 4 columns with margins */
+  .columns-area {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media screen and (min-width: 1900px) {
+  .column,
+  .drawer {
+    width: 400px;
+    border-radius: 4px;
+    height: 96vh;
+    margin-top: 2vh;
+  }
+}
+
 .column {
   width: 330px;
   position: relative;
