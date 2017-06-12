@@ -24,7 +24,7 @@ module Admin
         :silenced,
         :recent,
         :suspended,
-        :supporter
+        :supporter,
         :username,
         :display_name,
         :email,
