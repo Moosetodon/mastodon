@@ -1,26 +1,45 @@
-import emojify from 'mastodon/emoji';
-import { getLocale } from 'mastodon/locales';
-import { length } from 'stringz';
-import IntlRelativeFormat from 'intl-relativeformat';
-import { delegate } from 'rails-ujs';
+import loadPolyfills from '../mastodon/load_polyfills';
+import ready from '../mastodon/ready';
 
-require.context('../images/', true);
+window.addEventListener('message', e => {
+  const data = e.data || {};
 
-const { localeData } = getLocale();
-localeData.forEach(IntlRelativeFormat.__addLocaleData);
+  if (!window.parent || data.type !== 'setHeight') {
+    return;
+  }
+
+  ready(() => {
+    window.parent.postMessage({
+      type: 'setHeight',
+      id: data.id,
+      height: document.getElementsByTagName('html')[0].scrollHeight,
+    }, '*');
+  });
+});
 
 function main() {
-  const locale = document.documentElement.lang;
-  const dateTimeFormat = new Intl.DateTimeFormat(locale, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-  });
-  const relativeFormat = new IntlRelativeFormat(locale);
+  const { length } = require('stringz');
+  const IntlRelativeFormat = require('intl-relativeformat').default;
+  const { delegate } = require('rails-ujs');
+  const emojify = require('../mastodon/emoji').default;
+  const { getLocale } = require('../mastodon/locales');
+  const { localeData } = getLocale();
 
-  document.addEventListener('DOMContentLoaded', () => {
+  localeData.forEach(IntlRelativeFormat.__addLocaleData);
+
+  ready(() => {
+    const locale = document.documentElement.lang;
+
+    const dateTimeFormat = new Intl.DateTimeFormat(locale, {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    });
+
+    const relativeFormat = new IntlRelativeFormat(locale);
+
     [].forEach.call(document.querySelectorAll('.emojify'), (content) => {
       content.innerHTML = emojify(content.innerHTML);
     });
@@ -28,13 +47,23 @@ function main() {
     [].forEach.call(document.querySelectorAll('time.formatted'), (content) => {
       const datetime = new Date(content.getAttribute('datetime'));
       const formattedDate = dateTimeFormat.format(datetime);
+
       content.title = formattedDate;
       content.textContent = formattedDate;
     });
 
     [].forEach.call(document.querySelectorAll('time.time-ago'), (content) => {
       const datetime = new Date(content.getAttribute('datetime'));
-      content.textContent = relativeFormat.format(datetime);;
+
+      content.title = dateTimeFormat.format(datetime);
+      content.textContent = relativeFormat.format(datetime);
+    });
+
+    [].forEach.call(document.querySelectorAll('.logo-button'), (content) => {
+      content.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.open(e.target.href, 'mastodon-intent', 'width=400,height=400,resizable=no,menubar=no,status=no,scrollbars=yes');
+      });
     });
   });
 
@@ -46,8 +75,12 @@ function main() {
     }
   });
 
-  delegate(document, '.media-spoiler', 'click', ({ target }) => {
-    target.style.display = 'none';
+  delegate(document, '.activity-stream .media-spoiler-wrapper .media-spoiler', 'click', function() {
+    this.parentNode.classList.add('media-spoiler-wrapper__visible');
+  });
+
+  delegate(document, '.activity-stream .media-spoiler-wrapper .spoiler-button', 'click', function() {
+    this.parentNode.classList.remove('media-spoiler-wrapper__visible');
   });
 
   delegate(document, '.webapp-btn', 'click', ({ target, button }) => {
@@ -60,6 +93,7 @@ function main() {
 
   delegate(document, '.status__content__spoiler-link', 'click', ({ target }) => {
     const contentEl = target.parentNode.parentNode.querySelector('.e-content');
+
     if (contentEl.style.display === 'block') {
       contentEl.style.display = 'none';
       target.parentNode.style.marginBottom = 0;
@@ -67,11 +101,13 @@ function main() {
       contentEl.style.display = 'block';
       target.parentNode.style.marginBottom = null;
     }
+
     return false;
   });
 
   delegate(document, '.account_display_name', 'input', ({ target }) => {
     const nameCounter = document.querySelector('.name-counter');
+
     if (nameCounter) {
       nameCounter.textContent = 30 - length(target.value);
     }
@@ -79,18 +115,29 @@ function main() {
 
   delegate(document, '.account_note', 'input', ({ target }) => {
     const noteCounter = document.querySelector('.note-counter');
+
     if (noteCounter) {
       noteCounter.textContent = 160 - length(target.value);
     }
   });
+
+  delegate(document, '#account_avatar', 'change', ({ target }) => {
+    const avatar = document.querySelector('.card.compact .avatar img');
+    const [file] = target.files || [];
+    const url = file ? URL.createObjectURL(file) : avatar.dataset.originalSrc;
+
+    avatar.src = url;
+  });
+
+  delegate(document, '#account_header', 'change', ({ target }) => {
+    const header = document.querySelector('.card.compact');
+    const [file] = target.files || [];
+    const url = file ? URL.createObjectURL(file) : header.dataset.originalSrc;
+
+    header.style.backgroundImage = `url(${url})`;
+  });
 }
 
-if (!window.Intl) {
-  import(/* webpackChunkName: "base_polyfills" */ 'mastodon/base_polyfills').then(() => {
-    main();
-  }).catch(error => {
-    console.log(error); // eslint-disable-line no-console
-  });
-} else {
-  main();
-}
+loadPolyfills().then(main).catch(error => {
+  console.error(error);
+});

@@ -18,6 +18,8 @@
 #  file_meta         :json
 #
 
+require 'mime/types'
+
 class MediaAttachment < ApplicationRecord
   self.inheritance_column = nil
 
@@ -88,7 +90,8 @@ class MediaAttachment < ApplicationRecord
                 'vsync'    => 'cfr',
                 'b:v'      => '1300K',
                 'maxrate'  => '500K',
-                'crf'      => 6,
+                'bufsize'  => '1300K',
+                'crf'      => 18,
               },
             },
           },
@@ -148,9 +151,11 @@ class MediaAttachment < ApplicationRecord
 
   def populate_meta
     meta = {}
+
     file.queued_for_write.each do |style, file|
       begin
         geo = Paperclip::Geometry.from_file file
+
         meta[style] = {
           width: geo.width.to_i,
           height: geo.height.to_i,
@@ -161,6 +166,7 @@ class MediaAttachment < ApplicationRecord
         meta[style] = {}
       end
     end
+
     meta
   end
 
