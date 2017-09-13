@@ -21,22 +21,27 @@ class PostStatusService < BaseService
 
     media  = validate_media!(options[:media_ids])
     status = nil
+
     ApplicationRecord.transaction do
       status = account.statuses.create!(text: text,
                                         thread: in_reply_to,
                                         sensitive: options[:sensitive],
                                         spoiler_text: options[:spoiler_text] || '',
-                                        visibility: options[:visibility],
+                                        visibility: options[:visibility] || account.user&.setting_default_privacy,
                                         language: detect_language_for(text, account),
                                         application: options[:application])
+
       attach_media(status, media)
     end
+
     process_mentions_service.call(status)
     process_hashtags_service.call(status)
 
-    LinkCrawlWorker.perform_async(status.id) unless status.spoiler_text.present?
+    LinkCrawlWorker.perform_async(status.id) unless status.spoiler_text?
     DistributionWorker.perform_async(status.id)
     Pubsubhubbub::DistributionWorker.perform_async(status.stream_entry.id)
+    ActivityPub::DistributionWorker.perform_async(status.id)
+    ActivityPub::ReplyDistributionWorker.perform_async(status.id) if status.reply? && status.thread.account.local?
 
     if options[:idempotency].present?
       redis.setex("idempotency:status:#{account.id}:#{options[:idempotency]}", 3_600, status.id)

@@ -1,18 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import StatusContainer from '../../../containers/status_container';
 import AccountContainer from '../../../containers/account_container';
-import Avatar from '../../../components/avatar';
 import { FormattedMessage } from 'react-intl';
 import Permalink from '../../../components/permalink';
-import emojify from '../../../emoji';
-import escapeTextContentForBrowser from 'escape-html';
 import ImmutablePureComponent from 'react-immutable-pure-component';
 
-class Notification extends ImmutablePureComponent {
+export default class Notification extends ImmutablePureComponent {
 
   static propTypes = {
     notification: ImmutablePropTypes.map.isRequired,
+    hidden: PropTypes.bool,
   };
 
   renderFollow (account, link) {
@@ -26,13 +25,13 @@ class Notification extends ImmutablePureComponent {
           <FormattedMessage id='notification.follow' defaultMessage='{name} followed you' values={{ name: link }} />
         </div>
 
-        <AccountContainer id={account.get('id')} withNote={false} />
+        <AccountContainer id={account.get('id')} withNote={false} hidden={this.props.hidden} />
       </div>
     );
   }
 
   renderMention (notification) {
-    return <StatusContainer id={notification.get('status')} withDismiss />;
+    return <StatusContainer id={notification.get('status')} withDismiss hidden={this.props.hidden} />;
   }
 
   renderFavourite (notification, link) {
@@ -40,12 +39,16 @@ class Notification extends ImmutablePureComponent {
       <div className='notification notification-favourite'>
         <div className='notification__message'>
           <div className='notification__favourite-icon-wrapper'>
+<<<<<<< HEAD
             <i className='fa fa-fw fa-beer star-icon'/>
+=======
+            <i className='fa fa-fw fa-star star-icon' />
+>>>>>>> upstream/master
           </div>
           <FormattedMessage id='notification.favourite' defaultMessage='{name} favourited your status' values={{ name: link }} />
         </div>
 
-        <StatusContainer id={notification.get('status')} account={notification.get('account')} muted={true} withDismiss />
+        <StatusContainer id={notification.get('status')} account={notification.get('account')} muted withDismiss hidden={!!this.props.hidden} />
       </div>
     );
   }
@@ -60,17 +63,16 @@ class Notification extends ImmutablePureComponent {
           <FormattedMessage id='notification.reblog' defaultMessage='{name} boosted your status' values={{ name: link }} />
         </div>
 
-        <StatusContainer id={notification.get('status')} account={notification.get('account')} muted={true} withDismiss />
+        <StatusContainer id={notification.get('status')} account={notification.get('account')} muted withDismiss hidden={this.props.hidden} />
       </div>
     );
   }
 
-  render () { // eslint-disable-line consistent-return
+  render () {
     const { notification } = this.props;
     const account          = notification.get('account');
-    const displayName      = account.get('display_name').length > 0 ? account.get('display_name') : account.get('username');
-    const displayNameHTML = { __html: emojify(escapeTextContentForBrowser(displayName)) };
-    const link             = <Permalink className='notification__display-name' href={account.get('url')} title={account.get('acct')} to={`/accounts/${account.get('id')}`} dangerouslySetInnerHTML={displayNameHTML} />;
+    const displayNameHtml  = { __html: account.get('display_name_html') };
+    const link             = <Permalink className='notification__display-name' href={account.get('url')} title={account.get('acct')} to={`/accounts/${account.get('id')}`} dangerouslySetInnerHTML={displayNameHtml} />;
 
     switch(notification.get('type')) {
     case 'follow':
@@ -82,8 +84,8 @@ class Notification extends ImmutablePureComponent {
     case 'reblog':
       return this.renderReblog(notification, link);
     }
+
+    return null;
   }
 
 }
-
-export default Notification;

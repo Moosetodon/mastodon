@@ -2,6 +2,7 @@
 
 class ProcessInteractionService < BaseService
   include AuthorExtractor
+  include Authorization
 
   # Record locally the remote interaction with our user
   # @param [String] envelope Salmon envelope
@@ -46,7 +47,7 @@ class ProcessInteractionService < BaseService
         reflect_unblock!(account, target_account)
       end
     end
-  rescue Goldfinger::Error, HTTP::Error, OStatus2::BadSalmonError
+  rescue HTTP::Error, OStatus2::BadSalmonError, Mastodon::NotPermittedError
     nil
   end
 
@@ -66,10 +67,13 @@ class ProcessInteractionService < BaseService
 
   def follow!(account, target_account)
     follow = account.follow!(target_account)
+    FollowRequest.find_by(account: account, target_account: target_account)&.destroy
     NotifyService.new.call(target_account, follow)
   end
 
   def follow_request!(account, target_account)
+    return if account.requested?(target_account)
+
     follow_request = FollowRequest.create!(account: account, target_account: target_account)
     NotifyService.new.call(target_account, follow_request)
   end
@@ -87,6 +91,7 @@ class ProcessInteractionService < BaseService
 
   def unfollow!(account, target_account)
     account.unfollow!(target_account)
+    FollowRequest.find_by(account: account, target_account: target_account)&.destroy
   end
 
   def reflect_block!(account, target_account)
@@ -103,7 +108,9 @@ class ProcessInteractionService < BaseService
 
     return if status.nil?
 
-    RemovalWorker.perform_async(status.id) if account.id == status.account_id
+    authorize_with account, status, :destroy?
+
+    RemovalWorker.perform_async(status.id)
   end
 
   def favourite!(xml, from_account)

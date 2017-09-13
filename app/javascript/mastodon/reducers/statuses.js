@@ -11,6 +11,8 @@ import {
   BOOKMARK_SUCCESS,
   BOOKMARK_FAIL,
   UNBOOKMARK_SUCCESS,
+  PIN_SUCCESS,
+  UNPIN_SUCCESS,
 } from '../actions/interactions';
 import {
   STATUS_FETCH_SUCCESS,
@@ -25,10 +27,6 @@ import {
   TIMELINE_EXPAND_SUCCESS,
 } from '../actions/timelines';
 import {
-  ACCOUNT_TIMELINE_FETCH_SUCCESS,
-  ACCOUNT_TIMELINE_EXPAND_SUCCESS,
-  ACCOUNT_MEDIA_TIMELINE_FETCH_SUCCESS,
-  ACCOUNT_MEDIA_TIMELINE_EXPAND_SUCCESS,
   ACCOUNT_BLOCK_SUCCESS,
 } from '../actions/accounts';
 import {
@@ -44,8 +42,15 @@ import {
   BOOKMARKED_STATUSES_FETCH_SUCCESS,
   BOOKMARKED_STATUSES_EXPAND_SUCCESS
 } from '../actions/bookmarks';
+import {
+  PINNED_STATUSES_FETCH_SUCCESS,
+} from '../actions/pin_statuses';
 import { SEARCH_FETCH_SUCCESS } from '../actions/search';
-import Immutable from 'immutable';
+import emojify from '../emoji';
+import { Map as ImmutableMap, fromJS } from 'immutable';
+import escapeTextContentForBrowser from 'escape-html';
+
+const domParser = new DOMParser();
 
 const normalizeStatus = (state, status) => {
   if (!status) {
@@ -61,9 +66,11 @@ const normalizeStatus = (state, status) => {
   }
 
   const searchContent = [status.spoiler_text, status.content].join(' ').replace(/<br \/>/g, '\n').replace(/<\/p><p>/g, '\n\n');
-  normalStatus.search_index = new DOMParser().parseFromString(searchContent, 'text/html').documentElement.textContent;
+  normalStatus.search_index = domParser.parseFromString(searchContent, 'text/html').documentElement.textContent;
+  normalStatus.contentHtml = emojify(normalStatus.content);
+  normalStatus.spoilerHtml = emojify(escapeTextContentForBrowser(normalStatus.spoiler_text || ''));
 
-  return state.update(status.id, Immutable.Map(), map => map.mergeDeep(Immutable.fromJS(normalStatus)));
+  return state.update(status.id, ImmutableMap(), map => map.mergeDeep(fromJS(normalStatus)));
 };
 
 const normalizeStatuses = (state, statuses) => {
@@ -94,7 +101,7 @@ const filterStatuses = (state, relationship) => {
   return state;
 };
 
-const initialState = Immutable.Map();
+const initialState = ImmutableMap();
 
 export default function statuses(state = initialState, action) {
   switch(action.type) {
@@ -108,6 +115,8 @@ export default function statuses(state = initialState, action) {
   case UNFAVOURITE_SUCCESS:
   case BOOKMARK_SUCCESS:
   case UNBOOKMARK_SUCCESS:
+  case PIN_SUCCESS:
+  case UNPIN_SUCCESS:
     return normalizeStatus(state, action.response);
   case FAVOURITE_REQUEST:
     return state.setIn([action.status.get('id'), 'favourited'], true);
@@ -127,10 +136,6 @@ export default function statuses(state = initialState, action) {
     return state.setIn([action.id, 'muted'], false);
   case TIMELINE_REFRESH_SUCCESS:
   case TIMELINE_EXPAND_SUCCESS:
-  case ACCOUNT_TIMELINE_FETCH_SUCCESS:
-  case ACCOUNT_TIMELINE_EXPAND_SUCCESS:
-  case ACCOUNT_MEDIA_TIMELINE_FETCH_SUCCESS:
-  case ACCOUNT_MEDIA_TIMELINE_EXPAND_SUCCESS:
   case CONTEXT_FETCH_SUCCESS:
   case NOTIFICATIONS_REFRESH_SUCCESS:
   case NOTIFICATIONS_EXPAND_SUCCESS:
@@ -138,6 +143,7 @@ export default function statuses(state = initialState, action) {
   case FAVOURITED_STATUSES_EXPAND_SUCCESS:
   case BOOKMARKED_STATUSES_FETCH_SUCCESS:
   case BOOKMARKED_STATUSES_EXPAND_SUCCESS:
+  case PINNED_STATUSES_FETCH_SUCCESS:
   case SEARCH_FETCH_SUCCESS:
     return normalizeStatuses(state, action.statuses);
   case TIMELINE_DELETE:
